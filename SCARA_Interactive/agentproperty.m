@@ -1,0 +1,22 @@
+function agent=agentproperty(interact)
+agent.umax=0.05;
+agent.delta_t=0.1;
+agent.A=[1 0 agent.delta_t 0 ;0 1 0 agent.delta_t;0 0 1 0;0 0 0 1];
+agent.B=[0.5*agent.delta_t^2 0;0 0.5*agent.delta_t^2;agent.delta_t 0;0 agent.delta_t];
+agent.C=eye(4);
+agent.D=zeros(4,2);
+agent.Q=eye(4);
+agent.R=eye(2);
+[agent.K, agent.P] = lqr_infinite_horizon(agent.A, agent.B, agent.Q, agent.R);
+agent.Goal=[0.1,0.1]';
+agent.nG=size(agent.Goal,2);
+agent.x(1:4,1)=[0.5;0.5;0;0];
+agent.innoise=0;
+agent.outnoiseself=0;
+agent.outnoisestar=0;
+agent.obs.xself=[];
+agent.obs.xstar=[];
+agent.obs.goal=[];
+agent.score=0;
+agent.flag=0;
+end
